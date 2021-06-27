@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package streamVod;
+option go_package="./streamVod/streamVodpb";
+
+enum Status {
+    GoodStream = 0;
+    BadStream = 1;
+  }
+
+message ImageFrameRequest {
+    int32 rows = 1;
+    int32 cols = 2;
+    int32 type = 3;
+    bytes frame = 4;
+}
+
+message ImageFrameResponse {
+    Status status_code = 2;
+}
+
+service videoStreamService {
+    // client stream
+    rpc ImageFrame (stream ImageFrameRequest) returns (ImageFrameResponse);
+}
